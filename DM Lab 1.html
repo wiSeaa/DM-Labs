@@ -1,0 +1,266 @@
+<html>
+<head>
+<b><i>Лабораторная работа по ДМ №1</i></b>
+</head>
+<body>
+	<script>
+	/* con() объединяет два множества , предварительно проверяя правильность ввода их элементов
+	с последующим удалением повторяющихся (эти два шага выполняются также всеми последующими
+	функциями, поэтому в других комментариях эти операции, несмотря на свое присутствие в коде, не упоминаются).
+	*/
+	function con() {
+		var arr1 = document.getElementById("first").value.split(" ");
+		var arr2 = document.getElementById("second").value.split(" ");
+
+		/* Здесь и далее - Проверка корректности ввода элементов множеств по следующему образцу:
+		-кол-во символов в элементе равно 4;
+		-первый эл-т - четное число;
+		-второй эл-т - буква латинского алфавита;
+		-третий эл-т - нечетное число;
+		-четвертый эл-т - любое число.
+		*/
+		for (var i = 0; i < arr1.length; i++) {
+			if (arr1[i].length > 4 || arr1[i].length < 4) {
+				alert("Неверная длина элемента(-ов) 1 множества");
+				return false;
+			}
+			if (arr1[i][0] % 2 != 0 || arr1[i][1] < 'a' || arr1[i][1] > 'z' || arr1[i][2] / arr1[i][2] != 1 || arr1[i][2] % 2 == 0 || arr1[i][3] * 1 != arr1[i][3]) {
+				alert("Ошибка в элементе(-ах) 1 множества");
+				return false;
+			}
+		}
+		for (var i = 0; i < arr2.length; i++) {
+			if (arr2[i].length > 4 || arr2[i].length < 4) {
+				alert("Неверная длина элемента(-ов) 2 множества");
+				return false;
+			}
+			if (arr2[i][0] % 2 != 0 || arr2[i][1] < 'a' || arr2[i][1] > 'z' || arr2[i][2] / arr2[i][2] != 1 || arr2[i][2] % 2 == 0 || arr2[i][3] * 1 != arr2[i][3]) {
+				alert("Ошибка в элементе(-ах) 2 множества");
+				return false;
+			}
+		}
+
+		/*Здесь и далее - Удаление повторяющихся элементов в массивах с помощью
+		сопоставления элементов пустого и заполненного массивов по индексу.
+		*/
+		var buf = [];
+	    for (var i = 0; i < arr1.length; i++) {
+	    	if (buf.indexOf(arr1[i]) == -1)	{
+				buf = buf.concat(arr1[i]);
+	    	}
+	    }
+		arr1 = buf.slice();
+		buf = [];
+		for (var i = 0; i < arr2.length; i++) {
+			if (buf.indexOf(arr2[i]) == -1) {
+				buf = buf.concat(arr2[i]);
+			}
+		}
+	    arr2 = buf.slice();
+
+		var k = 0;
+		var arr0 = [];
+	    for (var i = 0; i < arr1.length; i++) {
+			for (var j = 0; j < arr2.length; j++) {
+				arr0[k] = arr1[i];
+				k++;
+				arr0[k] = arr2[j];
+				k++;
+			}
+	    }
+		
+		buf = [];
+		for (var i = 0; i < arr0.length; i++) {
+			if (buf.indexOf(arr0[i]) == -1) {
+				buf = buf.concat(arr0[i]);
+			}
+		}
+	    arr0 = buf.slice();
+
+	    document.getElementById("con").innerHTML = arr0;
+	}
+
+	/* inter() выполняет операцию пересечения двух множеств,
+	осуществляя поиск одинаковых элементов среди двух массивов.
+	*/
+	function inter() {
+		var arr1 = document.getElementById("first").value.split(" ");
+		var arr2 = document.getElementById("second").value.split(" ");
+		for (var i = 0; i < arr1.length; i++) {
+			if (arr1[i].length > 4 || arr1[i].length < 4) {
+				return false;
+			}
+			if (arr1[i][0] % 2 != 0 || arr1[i][1] < 'a' || arr1[i][1] > 'z' || arr1[i][2] / arr1[i][2] != 1 || arr1[i][2] % 2 == 0 || arr1[i][3] * 1 != arr1[i][3]) {
+				return false;
+			}
+		}
+		for (var i = 0; i < arr2.length; i++) {
+			if (arr2[i].length > 4 || arr2[i].length < 4) {
+				return false;
+			}
+			if (arr2[i][0] % 2 != 0 || arr2[i][1] < 'a' || arr2[i][1] > 'z' || arr2[i][2] / arr2[i][2] != 1 || arr2[i][2] % 2 == 0 || arr2[i][3] * 1 != arr2[i][3]) {
+				return false;
+			}
+		}
+
+		var buf = [];
+	    for (var i = 0; i < arr1.length; i++) {
+	        if (buf.indexOf(arr1[i]) == -1)	{
+	        	buf = buf.concat(arr1[i]);
+	        }
+	    }
+		arr1 = buf.slice();
+		buf = [];
+		for (var i = 0; i < arr2.length; i++) {
+			if (buf.indexOf(arr2[i]) == -1) {
+				buf = buf.concat(arr2[i]);
+			}
+		}
+	    arr2 = buf.slice();
+
+		var k = 0;
+	    var arr0 = [];
+	    for (var i = 0; i < arr1.length; i++) {
+	        for(var j = 0; j < arr2.length; j++) {
+	            if(arr1[i] == arr2[j]) {
+					arr0[k] = arr1[i];
+	            	k++;
+	            }
+	        }
+	    }
+
+	    document.getElementById("inter").innerHTML = arr0;
+	}
+
+	/* negation() выполняет операцию дополнения (или отрицания) двух множеств, проверяя отсутствие у 
+	второго множества элементов первого.
+	*/
+	function negation()	{
+		var arr1 = document.getElementById("first").value.split(" ");
+		var arr2 = document.getElementById("second").value.split(" ");
+		for (var i = 0; i < arr1.length; i++) {
+			if (arr1[i].length > 4 || arr1[i].length < 4) {
+				return false;
+			}
+			if (arr1[i][0] % 2 != 0 || arr1[i][1] < 'a' || arr1[i][1] > 'z' || arr1[i][2] / arr1[i][2] != 1 || arr1[i][2] % 2 == 0 || arr1[i][3] * 1 != arr1[i][3]) {
+				return false;
+			}
+		}
+		for (var i = 0; i < arr2.length; i++) {
+			if (arr2[i].length > 4 || arr2[i].length < 4) {
+				return false;
+			}
+			if (arr2[i][0] % 2 != 0 || arr2[i][1] < 'a' || arr2[i][1] > 'z' || arr2[i][2] / arr2[i][2] != 1 || arr2[i][2] % 2 == 0 || arr2[i][3] * 1 != arr2[i][3]) {
+				return false;
+			}
+		}
+
+		var buf = [];
+		for (var i = 0; i < arr1.length; i++) {
+			if (buf.indexOf(arr1[i]) == -1)	{
+				buf = buf.concat(arr1[i]);
+			}
+		}
+		arr1 = buf.slice();
+		buf = [];
+		for (var i = 0; i < arr2.length; i++) {
+			if (buf.indexOf(arr2[i]) == -1) {
+				buf = buf.concat(arr2[i]);
+			}
+		}
+		arr2 = buf.slice();
+		var k = 0;
+		var arr0 = [];
+		for (var i = 0; i < arr1.length; i++) {
+			if(arr2.indexOf(arr1[i]) == -1)	{
+				arr0[k] = arr1[i];
+				k++;
+			}
+		}
+
+		document.getElementById("negation").innerHTML = arr0;
+	}
+	/* diff() находит симметрическую разность множеств, выполняя поиск несовпадающих элементов в двух массивах.
+	*/
+	function diff()	{
+		var arr1 = document.getElementById("first").value.split(" ");
+		var arr2 = document.getElementById("second").value.split(" ");
+		for (var i = 0; i < arr1.length; i++)	{
+			if (arr1[i].length > 4 || arr1[i].length < 4) {
+				return false;
+			}
+			if (arr1[i][0] % 2 != 0 || arr1[i][1] < 'a' || arr1[i][1] > 'z' || arr1[i][2] / arr1[i][2] != 1 || arr1[i][2] % 2 == 0 || arr1[i][3] * 1 != arr1[i][3]) {
+				return false;
+			}
+		}
+		for (var i = 0; i < arr2.length; i++) {
+			if (arr2[i].length > 4 || arr2[i].length < 4) {
+				return false;
+			}
+			if (arr2[i][0] % 2 != 0 || arr2[i][1] < 'a' || arr2[i][1] > 'z' || arr2[i][2] / arr2[i][2] != 1 || arr2[i][2] % 2 == 0 || arr2[i][3] * 1 != arr2[i][3]) {
+				return false;
+			}
+		}
+		
+		var k = 0;
+		var arr0 = [];
+		var buf = [];
+	    for (var i = 0; i < arr1.length; i++) {
+	        if (buf.indexOf(arr1[i]) == -1)	{
+            buf = buf.concat(arr1[i]);
+	        }
+	    }
+		arr1 = buf.slice();
+		buf = [];
+		for (var i = 0; i < arr2.length; i++) {
+			if (buf.indexOf(arr2[i]) == -1) {
+				buf = buf.concat(arr2[i]);
+			}
+		}
+	    arr2 = buf.slice();
+		
+	    var arr = [];
+	    for (var i = 0; i < arr1.length; i++) {
+	        for (var j = 0; j < arr2.length; j++) {
+	            if(arr1[i] == arr2[j]) {
+	                arr[k] = arr1[i];
+	                k++;
+	            }
+	        }
+	    }
+	    for (var i = 0; i < arr1.length; i++) {
+	        if (arr.indexOf(arr1[i]) == -1)	{
+	            arr0 = arr0.concat(arr1[i]);
+	        }
+	    }
+	    for (var i = 0; i < arr2.length; i++) {
+	        if (arr.indexOf(arr2[i]) == -1)	{
+	            arr0 = arr0.concat(arr2[i]);
+	        }
+	    }
+
+		document.getElementById("diff").innerHTML = arr0;
+	}
+</script>
+
+<form>
+	<br><br>Введите два множества в формате <b>ibjc</b>, где:<br>
+	<b>i</b> - четное число;<br>
+	<b>b</b> - буква (латиница);<br>
+	<b>j</b> - нечетное число;<br>
+	<b>c</b> - любое число.<br><br>
+	Множество 1:<input type='' id ='first'/><br><br>
+	Множество 2:<input type='' id ='second'/><br><br><br>
+
+	<input type="button" value="Рассчитать" onClick="con(); inter(); negation(); diff();"><br>
+	<br><input disabled type="text" value="Объединение:" size="9">
+	<div id="con"></div><br>
+  <input disabled type="text" value="Пересечение:" size="8">
+	<div id="inter"></div><br>
+  <input disabled type="text" value="Дополнение/отрицание:" size="17">
+	<div id="negation"></div><br>
+  <input disabled type="text" value="Симметрическая разность:">
+	<div id="diff"></div><br>
+<form>
+</body>
+</html>
