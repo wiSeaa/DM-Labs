@@ -1,0 +1,100 @@
+<html>
+<head>
+  <b><i>Лабораторная работа по ДМ №3</i></b>
+  </head>
+  <body>
+  <script>
+    function execute() {
+        var matrix = document.getElementById("input").value.split(" ");
+        sizex = document.getElementById("sizex").value;
+        sizey = document.getElementById("sizey").value;
+        var temp1 = 1, temp2 = 1;
+        if ((sizex <= 0) || (sizey <= 0)) {
+          alert("Неверно указано кол-во строк или столбцов");
+          return 0;
+        }
+        if ((sizex == 1) && (sizey == 1)) {
+            alert("Не получилось создать матрицу с размерностью 1x1");
+        }
+        else {
+            for (var i = 0; i < matrix.length; i++) {
+                if (matrix[i].indexOf("\n") != -1 || matrix[i].indexOf("\n") == 1) {
+                    if (temp1 != sizex || matrix[i].length != 3) {
+                        alert("Неверный ввод матрицы");
+                        return 0;
+                    } else {
+                        temp1 = 1;
+                        temp2 += 1;
+                    }
+                }
+                if (matrix[i] != "\n") {
+                    temp1 += 1;
+                }
+            }
+            if (temp2 != sizey) {
+                alert("Неверный ввод матрицы");
+                return 0;
+            }
+            if (temp1 - 1 != sizex) {
+                alert("Неверный ввод матрицы");
+                return 0;
+            }
+            matrix = document.getElementById("input").value.replace(/\s+/g, " ").split(" ");
+            for (var i = 0; i < matrix.length; i++) {
+                if (matrix[i] != "1" && matrix[i] != "0") {
+                    alert("Матрица может состоять только из 1 и 0!");
+                    return 0;
+                }
+            }
+        }
+        var a = 0;
+        var arr = new Array(sizey);
+        for (var i = 0; i < sizey; i++) {
+            arr[i] = new Array(sizex);
+            for (var j = 0; j < sizex; j++) {
+                arr[i][j] = matrix[a];
+                a++;
+            }
+        }
+        var fin = 0;
+        var sum = 0;
+        var flag = 1;
+        for (var i = 0; i < sizey; i++) {
+            sum = 0;
+            for (var j = 0; j < sizex; j++) {
+                if (arr[i][j] === "1") {
+                    sum += 1;
+                }
+            }
+            console.log(sum);
+            if (sum !== 1) {
+                fin = 0;
+                flag = 0;
+                break;
+            }
+        }
+        if (flag === 1) {
+            fin = 1;
+        }
+        document.getElementById("check").innerHTML = check(fin);
+    }
+
+    function check(fin) {
+        if (fin) {
+            return "Да, отношение ЯВЛЯЕТСЯ функцией";
+        }
+        else {
+            return "Нет, отношение НЕ ЯВЛЯЕТСЯ функцией";
+        }
+    }
+  </script>
+  <form>
+      <p><i>Введите кол-во строк матрицы:</i><input type='text' id='sizey'></p>
+      <p><i>Введите кол-во столбцов матрицы:</i><input type='text' id='sizex'></p>
+      <p><i>Введите матрицу из единиц и нулей:</i></p>
+      <textarea cols="20" rows="12" name="simplename" id="input"></textarea>
+  	  <input type="button" name="result" value="Выполнить" onClick="execute()"><br><br>
+      <b>Является функцией?:</b><div id="check"></div>
+  </form>
+</body>
+</html>
